@@ -2,6 +2,7 @@ package pl.thinkandcode.samples.todo.domain;
 
 import org.junit.jupiter.api.Test;
 import pl.thinkandcode.samples.todo.domain.exceptions.InvalidTaskNameException;
+import pl.thinkandcode.samples.todo.domain.exceptions.InvalidTaskStatusException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -31,7 +32,7 @@ class TaskTest {
         var throwable = catchThrowable(() -> Task.create(taskNameStringFixture(), status));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable).isInstanceOf(InvalidTaskStatusException.class)
                 .hasMessage("Task status must not be null");
     }
 
