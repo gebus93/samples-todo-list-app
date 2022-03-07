@@ -1,0 +1,9 @@
+.name
+*.iws
+*.iml
+*.ipr
+/*.xml
+*/
+!.gitignore
+!codeStyles
+!runConfigurations

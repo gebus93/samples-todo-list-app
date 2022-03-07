@@ -30,5 +30,55 @@ dependencies {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+	useJUnitPlatform() {
+		excludeTags "architecture"
+		excludeTags "integration"
+		excludeTags "contract"
+		excludeTags "component"
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+def architectureTest = tasks.register("architectureTest", Test) {
+	useJUnitPlatform {
+		includeTags "architecture"
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+	shouldRunAfter test
+}
+
+
+def contractTest = tasks.register("contractTest", Test) {
+	useJUnitPlatform {
+		includeTags "contract"
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+	shouldRunAfter architectureTest
+}
+
+def integrationTest = tasks.register("integrationTest", Test) {
+	useJUnitPlatform {
+		includeTags "integration"
+	}
+	shouldRunAfter contractTest
+}
+
+def componentTest = tasks.register("componentTest", Test) {
+	useJUnitPlatform {
+		includeTags "component"
+	}
+	shouldRunAfter integrationTest
+}
+
+tasks.named("check") {
+	dependsOn architectureTest
+	dependsOn contractTest
+	dependsOn integrationTest
+	dependsOn componentTest
 }
