@@ -131,7 +131,7 @@ class ListNameTest {
         var listName = new ListName(value);
 
         // then
-        assertThat(listName.value()).isEqualTo(value);
+        assertThat(listName.getValue()).isEqualTo(value);
     }
 
     @Test
@@ -143,7 +143,7 @@ class ListNameTest {
         var listName = new ListName(value);
 
         // then
-        assertThat(listName.value()).isEqualTo(value);
+        assertThat(listName.getValue()).isEqualTo(value);
 
     }
 }

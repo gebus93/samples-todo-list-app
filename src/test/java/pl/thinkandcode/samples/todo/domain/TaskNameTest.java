@@ -131,7 +131,7 @@ class TaskNameTest {
         var taskName = new TaskName(value);
 
         // then
-        assertThat(taskName.value()).isEqualTo(value);
+        assertThat(taskName.getValue()).isEqualTo(value);
     }
 
     @Test
@@ -143,7 +143,7 @@ class TaskNameTest {
         var taskName = new TaskName(value);
 
         // then
-        assertThat(taskName.value()).isEqualTo(value);
+        assertThat(taskName.getValue()).isEqualTo(value);
 
     }
 }
