@@ -7,7 +7,7 @@ Sample project showing my coding skills.
 2. Should use JWE token to pass a user's authentication information
 3. Should use hexagonal architecture
 4. Should be written using TDD
-5. Should have whole spectrum of tests: architecture, unit, integration, contract, component
+5. Should have full spectrum of tests: architecture, unit, integration, contract, component
 
 ## Required features
 
