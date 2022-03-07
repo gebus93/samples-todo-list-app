@@ -1,14 +1,14 @@
 package pl.thinkandcode.samples.todo.domain;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Value
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TodoList {
     UUID id;
     ListName listName;
