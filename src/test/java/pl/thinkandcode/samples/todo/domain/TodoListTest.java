@@ -40,7 +40,7 @@ class TodoListTest {
     @Test
     void givenValidIdAndValidName_whenCreatingInstance_shouldCreateValidInstance() throws Exception {
         // given
-        var listId = UUID.randomUUID();
+        var listId = listIdFixture();
         var name = listNameStringFixture();
 
         // when
@@ -52,5 +52,19 @@ class TodoListTest {
                     assertThat(list.getId()).isEqualTo(listId);
                     assertThat(list.getListName()).isEqualTo(listNameFixture());
                 });
+    }
+
+    @Test
+    void givenValidArguments_whenAddingTask_shouldAddTaskToList() throws Exception {
+        // given
+        var todoList = TodoList.create(listIdFixture(), listNameStringFixture());
+
+        // when
+        todoList.addTask("task name", TaskStatus.PENDING);
+
+        // then
+        var expectedTask = Task.create("task name", TaskStatus.PENDING);
+        assertThat(todoList.getTasks()).hasSize(1);
+        assertThat(todoList.getTasks()).contains(expectedTask);
     }
 }
