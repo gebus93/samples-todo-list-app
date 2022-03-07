@@ -1,2 +1,2 @@
-# samples-todo-list-app
+# [Samples] ToDo List Application
 Sample project showing coding skills
