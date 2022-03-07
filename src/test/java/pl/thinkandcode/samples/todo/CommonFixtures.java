@@ -1,6 +1,7 @@
 package pl.thinkandcode.samples.todo;
 
 import pl.thinkandcode.samples.todo.domain.ListName;
+import pl.thinkandcode.samples.todo.domain.TaskName;
 
 import java.util.UUID;
 
@@ -18,5 +19,13 @@ public class CommonFixtures {
 
     public static String listNameStringFixture() {
         return "TODO list";
+    }
+
+    public static TaskName taskNameFixture() {
+        return new TaskName(taskNameStringFixture());
+    }
+
+    public static String taskNameStringFixture() {
+        return "Task to do";
     }
 }
