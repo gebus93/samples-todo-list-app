@@ -1,5 +1,6 @@
 package pl.thinkandcode.samples.todo;
 
+import pl.thinkandcode.samples.todo.application.CreateTodoListCommand;
 import pl.thinkandcode.samples.todo.domain.ListName;
 import pl.thinkandcode.samples.todo.domain.TaskName;
 
@@ -27,5 +28,9 @@ public class CommonFixtures {
 
     public static String taskNameStringFixture() {
         return "Task to do";
+    }
+
+    public static CreateTodoListCommand createTodoListCommandFixture() {
+        return new CreateTodoListCommand(listNameStringFixture());
     }
 }
