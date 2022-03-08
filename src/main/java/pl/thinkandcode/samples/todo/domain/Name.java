@@ -2,10 +2,8 @@ package pl.thinkandcode.samples.todo.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import pl.thinkandcode.samples.todo.domain.exceptions.DomainValidationException;
 
-@ToString
 @EqualsAndHashCode
 public abstract class Name {
     private final int minLength;
@@ -43,5 +41,10 @@ public abstract class Name {
 
     private String trimWhitespaces(String value) {
         return value.trim().replaceAll("(^[\\h\\v\\s\u202a-\u202e]*)|([\\h\\v\\s\u202a-\u202e]*$)", "");
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }
