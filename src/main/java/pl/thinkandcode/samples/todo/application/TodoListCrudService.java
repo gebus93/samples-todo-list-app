@@ -1,7 +1,10 @@
 package pl.thinkandcode.samples.todo.application;
 
+import pl.thinkandcode.samples.todo.application.UpdateTodoListCommand.Task;
+import pl.thinkandcode.samples.todo.application.exceptions.TodoListDoesNotExistException;
 import pl.thinkandcode.samples.todo.domain.TodoList;
 
+import java.util.List;
 import java.util.Objects;
 
 public class TodoListCrudService {
@@ -32,5 +35,44 @@ public class TodoListCrudService {
         repository.save(todoList);
         observer.notifyTodoListCreated(todoList);
         return todoList;
+    }
+
+    public void updateTodoList(UpdateTodoListCommand cmd) {
+        Objects.requireNonNull(cmd, "Command must not be null");
+        var todoListId = Objects.requireNonNull(cmd.id(), "List id must not be null");
+        if (!repository.exists(todoListId)) {
+            observer.notifyUpdatedTodoListDoesNotExist(cmd);
+            throw new TodoListDoesNotExistException(todoListId);
+        }
+        var todoList = TodoList.create(todoListId, cmd.name());
+        List<Task> tasks = Objects.requireNonNullElse(cmd.tasks(), List.of());
+        for (var task : tasks) {
+            todoList.addTask(task.name(), task.status());
+        }
+
+        repository.save(todoList);
+        observer.notifyTodoListUpdated(todoList);
+    }
+
+    public void deleteTodoList(DeleteTodoListCommand cmd) {
+        Objects.requireNonNull(cmd, "Command must not be null");
+        var todoListId = Objects.requireNonNull(cmd.id(), "List id must not be null");
+        if (!repository.exists(todoListId)) {
+            observer.notifyDeletedTodoListDoesNotExist(cmd);
+            return;
+        }
+        repository.delete(todoListId);
+        observer.notifyTodoListDeleted(todoListId);
+    }
+
+    public TodoList getTodoList(GetTodoListQuery query) {
+        Objects.requireNonNull(query, "Query must not be null");
+        var todoListId = Objects.requireNonNull(query.id(), "List id must not be null");
+        return repository.findTodoList(todoListId)
+                .orElseThrow(() -> new TodoListDoesNotExistException(todoListId));
+    }
+
+    public List<TodoList> getAllTodoLists() {
+        return repository.findAll();
     }
 }

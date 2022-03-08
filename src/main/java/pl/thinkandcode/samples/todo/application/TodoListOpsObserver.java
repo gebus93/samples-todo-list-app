@@ -2,10 +2,12 @@ package pl.thinkandcode.samples.todo.application;
 
 import pl.thinkandcode.samples.todo.domain.TodoList;
 
+import java.util.UUID;
+
 /**
  * This interface simplifies extending application without changing a code responsible for a business logic.
  * It's an example of the open-close principle. By using it, there are many ways to extend application behaviour.
- *
+ * <p>
  * For example:
  * <ul>
  *     <li><b>LoggingTodoListOpsObserver</b> - allows to log significant information outside the application layer of a hexagonal architecture. It's a good way to clean the business logic code.</li>
@@ -18,4 +20,12 @@ public interface TodoListOpsObserver {
     void notifyTodoListCreationFailedDueToTheExceededLimit(CreateTodoListCommand cmd);
 
     void notifyTodoListCreated(TodoList todoList);
+
+    void notifyUpdatedTodoListDoesNotExist(UpdateTodoListCommand cmd);
+
+    void notifyTodoListUpdated(TodoList todoList);
+
+    void notifyDeletedTodoListDoesNotExist(DeleteTodoListCommand cmd);
+
+    void notifyTodoListDeleted(UUID todoListId);
 }
