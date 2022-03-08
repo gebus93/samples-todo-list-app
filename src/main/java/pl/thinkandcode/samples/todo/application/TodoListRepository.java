@@ -16,4 +16,6 @@ public interface TodoListRepository {
     Optional<TodoList> findTodoList(UUID todoListId);
 
     List<TodoList> findAll();
+
+    int countAll();
 }
