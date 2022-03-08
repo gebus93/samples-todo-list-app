@@ -5,7 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.thinkandcode.samples.todo.application.exceptions.TodoListDoesNotExistException;
+import pl.thinkandcode.samples.todo.domain.TaskStatus;
 import pl.thinkandcode.samples.todo.domain.TodoList;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -178,5 +183,274 @@ class TodoListCrudServiceTest {
         // then
         var expectedTodoList = TodoList.create(listIdFixture(), listNameStringFixture());
         assertThat(createdTodoList).isEqualTo(expectedTodoList);
+    }
+
+    @Test
+    void givenNullCommand_whenUpdatingTodoList_shouldThrowException() {
+        // given
+        UpdateTodoListCommand cmd = null;
+
+        // when
+        var throwable = catchThrowable(() -> service.updateTodoList(cmd));
+
+        // then
+        assertThat(throwable).isInstanceOf(NullPointerException.class)
+                .hasMessage("Command must not be null");
+    }
+
+    @Test
+    void givenCommandWithNullId_whenUpdatingTodoList_shouldThrowException() {
+        // given
+        var cmd = new UpdateTodoListCommand(null, listNameStringFixture(), List.of());
+
+        // when
+        var throwable = catchThrowable(() -> service.updateTodoList(cmd));
+
+        // then
+        assertThat(throwable).isInstanceOf(NullPointerException.class)
+                .hasMessage("List id must not be null");
+    }
+
+    @Test
+    void givenValidCommand_whenUpdatingTodoList_shouldVerifyListExistence() {
+        // given
+        var cmd = updateTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(true);
+
+        // when
+        service.updateTodoList(cmd);
+
+        // then
+        verify(repository).exists(listIdFixture());
+    }
+
+    @Test
+    void givenValidCommand_whenUpdatingTodoList_andListDoesNotExist_shouldThrowException() {
+        // given
+        var cmd = updateTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(false);
+
+        // when
+        var throwable = catchThrowable(() -> service.updateTodoList(cmd));
+
+        // then
+        assertThat(throwable).isInstanceOf(TodoListDoesNotExistException.class)
+                .hasMessage("Could not find to do list with id 'b2865319-d026-4ab1-b94a-7a67db79c66a'");
+    }
+
+    @Test
+    void givenValidCommand_whenUpdatingTodoList_andListDoesNotExist_shouldNotifyObserver() {
+        // given
+        var cmd = updateTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(false);
+
+        // when
+        var throwable = catchThrowable(() -> service.updateTodoList(cmd));
+
+        // then
+        verify(observer, only()).notifyUpdatedTodoListDoesNotExist(cmd);
+    }
+
+    @Test
+    void givenValidCommand_whenUpdatingTodoList_shouldNotifyObserver() {
+        // given
+        var cmd = updateTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(true);
+
+        // when
+        service.updateTodoList(cmd);
+
+        // then
+        var expectedTodoList = TodoList.create(listIdFixture(), listNameStringFixture());
+        expectedTodoList.addTask(taskNameStringFixture(), TaskStatus.DONE);
+        verify(observer, only()).notifyTodoListUpdated(expectedTodoList);
+    }
+
+    @Test
+    void givenValidCommand_whenUpdatingTodoList_shouldSaveListInTheRepository() {
+        // given
+        var cmd = updateTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(true);
+
+        // when
+        service.updateTodoList(cmd);
+
+        // then
+        var expectedTodoList = TodoList.create(listIdFixture(), listNameStringFixture());
+        expectedTodoList.addTask(taskNameStringFixture(), TaskStatus.DONE);
+        verify(repository).save(expectedTodoList);
+    }
+
+    @Test
+    void givenValidCommandWithNullTasksList_whenUpdatingTodoList_shouldSaveListInTheRepositoryWithEmptyTasksList() {
+        // given
+        var cmd = new UpdateTodoListCommand(listIdFixture(), listNameStringFixture(), null);
+        when(repository.exists(any())).thenReturn(true);
+
+        // when
+        service.updateTodoList(cmd);
+
+        // then
+        var expectedTodoList = TodoList.create(listIdFixture(), listNameStringFixture());
+        verify(repository).save(expectedTodoList);
+    }
+
+    @Test
+    void givenNullCommand_whenDeletingTodoList_shouldThrowException() {
+        // given
+        DeleteTodoListCommand cmd = null;
+
+        // when
+        var throwable = catchThrowable(() -> service.deleteTodoList(cmd));
+
+        // then
+        assertThat(throwable).isInstanceOf(NullPointerException.class)
+                .hasMessage("Command must not be null");
+
+    }
+
+    @Test
+    void givenCommandWithNullId_whenDeletingTodoList_shouldThrowException() {
+        // given
+        var cmd = new DeleteTodoListCommand(null);
+
+        // when
+        var throwable = catchThrowable(() -> service.deleteTodoList(cmd));
+
+        // then
+        assertThat(throwable).isInstanceOf(NullPointerException.class)
+                .hasMessage("List id must not be null");
+    }
+
+    @Test
+    void givenValidCommand_whenDeletingTodoList_shouldVerifyListExistence() {
+        // given
+        var cmd = deleteTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(true);
+
+        // when
+        service.deleteTodoList(cmd);
+
+        // then
+        verify(repository).exists(listIdFixture());
+    }
+
+    @Test
+    void givenValidCommand_whenDeletingTodoList_andListDoesNotExist_shouldNotThrowException() {
+        // given
+        var cmd = deleteTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(false);
+
+        // when
+        var throwable = catchThrowable(() -> service.deleteTodoList(cmd));
+
+        // then
+        assertThat(throwable).isNull();
+    }
+
+    @Test
+    void givenValidCommand_whenDeletingTodoList_andListDoesNotExist_shouldNotifyObserver() {
+        // given
+        var cmd = deleteTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(false);
+
+        // when
+        service.deleteTodoList(cmd);
+
+        // then
+        verify(observer, only()).notifyDeletedTodoListDoesNotExist(cmd);
+    }
+
+    @Test
+    void givenValidCommand_whenDeletingTodoList_shouldNotifyObserver() {
+        // given
+        var cmd = deleteTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(true);
+
+        // when
+        service.deleteTodoList(cmd);
+
+        // then
+        verify(observer, only()).notifyTodoListDeleted(cmd.id());
+    }
+
+    @Test
+    void givenValidCommand_whenDeletingTodoList_shouldSaveListInTheRepository() {
+        // given
+        var cmd = deleteTodoListCommandFixture();
+        when(repository.exists(any())).thenReturn(true);
+
+        // when
+        service.deleteTodoList(cmd);
+
+        // then
+        verify(repository).delete(cmd.id());
+    }
+
+    @Test
+    void givenNullQuery_whenGettingTodoList_shouldThrowException() {
+        // given
+        GetTodoListQuery query = null;
+
+        // when
+        var throwable = catchThrowable(() -> service.getTodoList(query));
+
+        // then
+        assertThat(throwable).isInstanceOf(NullPointerException.class)
+                .hasMessage("Query must not be null");
+
+    }
+
+    @Test
+    void givenQueryWithNullId_whenGettingTodoList_shouldThrowException() {
+        // given
+        GetTodoListQuery query = new GetTodoListQuery(null);
+
+        // when
+        var throwable = catchThrowable(() -> service.getTodoList(query));
+
+        // then
+        assertThat(throwable).isInstanceOf(NullPointerException.class)
+                .hasMessage("List id must not be null");
+    }
+
+    @Test
+    void givenValidQuery_whenGettingTodoList_andListDoesNotExist_shouldThrowException() {
+        // given
+        var query = getTodoListQueryFixture();
+        when(repository.findTodoList(any())).thenReturn(Optional.empty());
+
+        // when
+        var throwable = catchThrowable(() -> service.getTodoList(query));
+
+        // then
+        assertThat(throwable).isInstanceOf(TodoListDoesNotExistException.class)
+                .hasMessage("Could not find to do list with id 'b2865319-d026-4ab1-b94a-7a67db79c66a'");
+
+    }
+
+    @Test
+    void givenValidQuery_whenGettingTodoList_shouldReturnValidTodoList() {
+        // given
+        var query = getTodoListQueryFixture();
+        when(repository.findTodoList(any())).thenReturn(Optional.of(todoListFixture()));
+
+        // when
+        var todoList = service.getTodoList(query);
+
+        // then
+        assertThat(todoList).isEqualTo(todoListFixture());
+    }
+
+    @Test
+    void whenGettingAllTodoLists_shouldReturnValidTodoLists() {
+        // given
+        when(repository.findAll()).thenReturn(List.of(todoListFixture()));
+
+        // when
+        var todoList = service.getAllTodoLists();
+
+        // then
+        assertThat(todoList).isEqualTo(List.of(todoListFixture()));
     }
 }
