@@ -66,12 +66,18 @@ def integrationTest = tasks.register("integrationTest", Test) {
 	useJUnitPlatform {
 		includeTags "integration"
 	}
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 	shouldRunAfter contractTest
 }
 
 def componentTest = tasks.register("componentTest", Test) {
 	useJUnitPlatform {
 		includeTags "component"
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
 	}
 	shouldRunAfter integrationTest
 }
