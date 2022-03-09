@@ -59,7 +59,7 @@ class LoggingTodoListOpsObserverTest {
         observer = new LoggingTodoListOpsObserver();
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] verify method \"{0}\" logs correctly")
     @MethodSource("methodInvocations")
     void givenValidArguments_whenInvokingMethod_shouldLogMessage(Consumer<TodoListOpsObserver> methodInvocation,
                                                                  Level expectedLogLevel,
