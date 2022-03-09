@@ -33,7 +33,8 @@ class UserStatisticsServiceTest {
         var throwable = catchThrowable(() -> new UserStatisticsService(repository, limitProvider));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Repository must not be null");
     }
 
@@ -46,7 +47,8 @@ class UserStatisticsServiceTest {
         var throwable = catchThrowable(() -> new UserStatisticsService(repository, limitProvider));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Limit provider must not be null");
     }
 
