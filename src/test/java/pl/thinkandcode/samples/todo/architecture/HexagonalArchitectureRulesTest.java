@@ -11,6 +11,7 @@ public class HexagonalArchitectureRulesTest extends AbstractArchitectureTest {
                 .domainModels("pl.thinkandcode.samples.todo.domain..")
                 .domainServices("pl.thinkandcode.samples.todo.domain..")
                 .applicationServices("pl.thinkandcode.samples.todo.application..")
+                .adapter("rest", "pl.thinkandcode.samples.todo.adapters.inbound.rest..")
                 .adapter("persistence", "pl.thinkandcode.samples.todo.adapters.outbound.persistence..")
                 .adapter("identifiers", "pl.thinkandcode.samples.todo.adapters.outbound.identifiers..")
                 .adapter("limit source", "pl.thinkandcode.samples.todo.adapters.outbound.limits..")
