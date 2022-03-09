@@ -15,6 +15,6 @@ public class PropertiesFilesBasedTodoListLimitVerificationStrategy implements To
     public boolean isExceeded() {
         var limit = limitProvider.getLimit();
         var currentUsage = repository.countAll();
-        return currentUsage < limit;
+        return currentUsage >= limit;
     }
 }
