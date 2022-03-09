@@ -17,7 +17,7 @@ public class TodoListLimitProviderTest extends AbstractIntegrationTest {
     private TodoListLimitProvider limitProvider;
 
     @DynamicPropertySource
-    static void datasourceConfig(DynamicPropertyRegistry registry) {
+    static void todoListLimitsConfig(DynamicPropertyRegistry registry) {
         registry.add("todo-lists.limit", () -> RANDOM_LIMIT);
     }
 
@@ -29,7 +29,7 @@ public class TodoListLimitProviderTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void whenGettingLimit_shouldReturnValueFromPropertiesFile() throws Exception {
+    void whenGettingLimit_shouldReturnValueFromPropertiesFile() {
         // when
         var limit = limitProvider.getLimit();
 
