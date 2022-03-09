@@ -49,7 +49,8 @@ class TodoListTest {
         var todoList = TodoList.create(listId, name);
 
         // then
-        assertThat(todoList).isNotNull()
+        assertThat(todoList)
+                .isNotNull()
                 .satisfies(list -> {
                     assertThat(list.getId()).isEqualTo(listId);
                     assertThat(list.getListName()).isEqualTo(listNameFixture());

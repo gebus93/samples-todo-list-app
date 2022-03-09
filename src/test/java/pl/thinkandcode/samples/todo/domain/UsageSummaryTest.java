@@ -15,9 +15,11 @@ class UsageSummaryTest {
         var throwable = catchThrowable(() -> UsageSummary.create(currentUsage, 5));
 
         // then
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class)
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Number of created list must not be negative");
     }
+
     @Test
     void givenNegativeLimit_whenCreatingInstance_shouldThrowException() throws Exception {
         // given
@@ -27,7 +29,8 @@ class UsageSummaryTest {
         var throwable = catchThrowable(() -> UsageSummary.create(5, limit));
 
         // then
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class)
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Limit of created list must not be negative");
     }
 

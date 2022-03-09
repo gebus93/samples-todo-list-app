@@ -43,7 +43,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> new TodoListCrudService(observer, limitVerificationStrategy, idGenerator, repository));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Observer must not be null");
     }
 
@@ -56,7 +57,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> new TodoListCrudService(observer, limitVerificationStrategy, idGenerator, repository));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Todo list id generator must not be null");
     }
 
@@ -69,7 +71,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> new TodoListCrudService(observer, verificationStrategy, idGenerator, repository));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Limit verification strategy must not be null");
     }
 
@@ -82,7 +85,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> new TodoListCrudService(observer, limitVerificationStrategy, idGenerator, repository));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Repository must not be null");
     }
 
@@ -95,7 +99,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.createTodoList(cmd));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Command must not be null");
     }
 
@@ -194,7 +199,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.updateTodoList(cmd));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Command must not be null");
     }
 
@@ -207,7 +213,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.updateTodoList(cmd));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("List id must not be null");
     }
 
@@ -234,7 +241,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.updateTodoList(cmd));
 
         // then
-        assertThat(throwable).isInstanceOf(TodoListDoesNotExistException.class)
+        assertThat(throwable)
+                .isInstanceOf(TodoListDoesNotExistException.class)
                 .hasMessage("Could not find to do list with id 'b2865319-d026-4ab1-b94a-7a67db79c66a'");
     }
 
@@ -304,7 +312,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.deleteTodoList(cmd));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Command must not be null");
 
     }
@@ -318,7 +327,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.deleteTodoList(cmd));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("List id must not be null");
     }
 
@@ -396,7 +406,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.getTodoList(query));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("Query must not be null");
 
     }
@@ -410,7 +421,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.getTodoList(query));
 
         // then
-        assertThat(throwable).isInstanceOf(NullPointerException.class)
+        assertThat(throwable)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("List id must not be null");
     }
 
@@ -424,7 +436,8 @@ class TodoListCrudServiceTest {
         var throwable = catchThrowable(() -> service.getTodoList(query));
 
         // then
-        assertThat(throwable).isInstanceOf(TodoListDoesNotExistException.class)
+        assertThat(throwable)
+                .isInstanceOf(TodoListDoesNotExistException.class)
                 .hasMessage("Could not find to do list with id 'b2865319-d026-4ab1-b94a-7a67db79c66a'");
 
     }
