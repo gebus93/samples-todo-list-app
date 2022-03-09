@@ -68,7 +68,8 @@ public class TodoListCrudService {
     public TodoList getTodoList(GetTodoListQuery query) {
         Objects.requireNonNull(query, "Query must not be null");
         var todoListId = Objects.requireNonNull(query.id(), "List id must not be null");
-        return repository.findTodoList(todoListId)
+        return repository
+                .findTodoList(todoListId)
                 .orElseThrow(() -> new TodoListDoesNotExistException(todoListId));
     }
 

@@ -19,7 +19,8 @@ class TaskTest {
         var throwable = catchThrowable(() -> Task.create(taskName, TaskStatus.DONE));
 
         // then
-        assertThat(throwable).isInstanceOf(InvalidTaskNameException.class)
+        assertThat(throwable)
+                .isInstanceOf(InvalidTaskNameException.class)
                 .hasMessage("Task name must not be null nor blank");
     }
 
@@ -32,7 +33,8 @@ class TaskTest {
         var throwable = catchThrowable(() -> Task.create(taskNameStringFixture(), status));
 
         // then
-        assertThat(throwable).isInstanceOf(InvalidTaskStatusException.class)
+        assertThat(throwable)
+                .isInstanceOf(InvalidTaskStatusException.class)
                 .hasMessage("Task status must not be null");
     }
 
