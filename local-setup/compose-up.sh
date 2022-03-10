@@ -11,5 +11,9 @@ java --version
 docker build -f "${projectDir}/docker/Dockerfile" -t "${image}" "${projectDir}/build/libs"
 
 cd "${scriptDir}"
+
+# this permission is an overkill, but for local setup it's not to bad
+chmod 777 "${scriptDir}/grafana/data/grafana.db"
+
 docker-compose down
 docker-compose up -d --force-recreate
