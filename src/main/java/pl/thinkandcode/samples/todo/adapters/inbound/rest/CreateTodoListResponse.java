@@ -10,7 +10,7 @@ public record CreateTodoListResponse(UUID id, String name, List<TaskDto> tasks) 
     public static CreateTodoListResponse from(TodoList todoList) {
         var tasks = todoList.getTasks()
                             .stream()
-                            .map(t -> new TaskDto(t.getName().getValue(), t.getStatus().name()))
+                            .map(TaskDto::from)
                             .toList();
         return new CreateTodoListResponse(
                 todoList.getId(),

@@ -128,7 +128,6 @@ contracts {
 	baseClassForTests = "pl.thinkandcode.samples.todo.contracts.AbstractContractTest"
 }
 
-
 task dockerComposeUp(type:Exec) {
 	workingDir "${rootDir}/component-tests-env"
 	commandLine './compose-up.sh'

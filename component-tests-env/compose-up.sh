@@ -6,6 +6,7 @@ projectDir=$(dirname "${scriptDir}")
 image=fake-registry.thinkandcode.pl/samples/todo-app-sample:latest
 
 cd "${projectDir}"
+java --version
 ./gradlew -s build -x check
 docker build -f "${projectDir}/docker/Dockerfile" -t "${image}" "${projectDir}/build/libs"
 

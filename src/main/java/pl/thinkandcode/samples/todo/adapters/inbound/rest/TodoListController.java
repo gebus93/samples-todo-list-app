@@ -3,8 +3,8 @@ package pl.thinkandcode.samples.todo.adapters.inbound.rest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.thinkandcode.samples.todo.adapters.inbound.rest.TaskDto.TaskStatus;
 import pl.thinkandcode.samples.todo.application.*;
-import pl.thinkandcode.samples.todo.domain.TaskStatus;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -39,7 +39,12 @@ public class TodoListController {
         var tasks = Optional.ofNullable(request.tasks())
                             .stream()
                             .flatMap(Collection::stream)
-                            .map(t -> new UpdateTodoListCommand.Task(t.name(), TaskStatus.valueOf(t.status())))
+                            .map(t -> {
+                                var status = Optional.ofNullable(t.status())
+                                                     .map(TaskStatus::toDomainObject)
+                                                     .orElse(null);
+                                return new UpdateTodoListCommand.Task(t.name(), status);
+                            })
                             .toList();
 
         service.updateTodoList(new UpdateTodoListCommand(todoListId, request.name(), tasks));
