@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.thinkandcode.samples.todo.application.exceptions.TodoListDoesNotExistException;
+import pl.thinkandcode.samples.todo.application.exceptions.TodoListsLimitExceededException;
 import pl.thinkandcode.samples.todo.domain.TaskStatus;
 import pl.thinkandcode.samples.todo.domain.TodoList;
 
@@ -124,11 +125,26 @@ class TodoListCrudServiceTest {
         when(limitVerificationStrategy.isExceeded()).thenReturn(true);
 
         // when
-        service.createTodoList(cmd);
+        catchThrowable(() -> service.createTodoList(cmd));
 
         // then
         verify(observer, only()).notifyTodoListCreationFailedDueToTheExceededLimit(cmd);
         verifyNoInteractions(idGenerator);
+    }
+
+    @Test
+    void givenValidCommand_whenCreatingTodoList_andLimitIsExceeded_shouldThrowException() throws Exception {
+        // given
+        var cmd = createTodoListCommandFixture();
+        when(limitVerificationStrategy.isExceeded()).thenReturn(true);
+
+        // when
+        var throwable = catchThrowable(() -> service.createTodoList(cmd));
+
+        // then
+        assertThat(throwable)
+                .isInstanceOf(TodoListsLimitExceededException.class)
+                .hasMessage("Could not create todo list. Limit has been exceeded.");
     }
 
     @Test

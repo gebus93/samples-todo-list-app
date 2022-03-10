@@ -1,9 +1,11 @@
 package pl.thinkandcode.samples.todo.application;
 
+import org.springframework.stereotype.Service;
 import pl.thinkandcode.samples.todo.domain.UsageSummary;
 
 import java.util.Objects;
 
+@Service
 public class UserStatisticsService {
     private final TodoListRepository repository;
     private final TodoListLimitProvider limitProvider;

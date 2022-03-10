@@ -4,6 +4,11 @@
       <option name="SUBCLASS_NAME_PREFIX" value="Default" />
       <option name="SUBCLASS_NAME_SUFFIX" value="" />
     </JavaCodeStyleSettings>
+    <codeStyleSettings language="Groovy">
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="2" />
+      </indentOptions>
+    </codeStyleSettings>
     <codeStyleSettings language="JAVA">
       <option name="RIGHT_MARGIN" value="140" />
       <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
