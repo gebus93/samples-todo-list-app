@@ -19,7 +19,7 @@ public record GetAllTodoListsResponse(List<SingleTodoList> todoLists) {
         public static SingleTodoList from(TodoList todoList) {
             var tasks = todoList.getTasks()
                                 .stream()
-                                .map(t -> new TaskDto(t.getName().getValue(), t.getStatus().name()))
+                                .map(TaskDto::from)
                                 .toList();
             return new SingleTodoList(
                     todoList.getId(),

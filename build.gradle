@@ -99,13 +99,15 @@ def integrationTest = tasks.register("integrationTest", Test) {
 }
 
 def componentTest = tasks.register("componentTest", Test) {
+	dependsOn dockerComposeUp
+	finalizedBy dockerComposeDown
 	useJUnitPlatform {
 		includeTags "component"
 	}
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
-	shouldRunAfter integrationTest
+	shouldRunAfter integrationTest, dockerComposeUp
 }
 
 tasks.named("check") {
@@ -124,4 +126,14 @@ dependencyManagement {
 contracts {
 	testFramework = org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
 	baseClassForTests = "pl.thinkandcode.samples.todo.contracts.AbstractContractTest"
+}
+
+task dockerComposeUp(type:Exec) {
+	workingDir "${rootDir}/component-tests-env"
+	commandLine './compose-up.sh'
+}
+
+task dockerComposeDown(type:Exec) {
+	workingDir "${rootDir}/component-tests-env"
+	commandLine './compose-down.sh'
 }
