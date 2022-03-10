@@ -1,3 +1,11 @@
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 25
+      min-spare: 5
+    mbeanregistry.enabled: true
+
 todo-lists:
   limit: 5
 
@@ -6,6 +14,28 @@ security:
     secret: 8gtpDtBl6cwsDBDLoWu/0A==
 
 spring:
+  application:
+    name: todo-app
   data:
     mongodb:
       uri: mongodb://localhost/todoList
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles:
+        http.server.requests: 0.99, 0.90, 0.75
+
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - prometheus

@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  mongo:
+    image: mongo:4.4.9
+
+  todo-list:
+    image: fake-registry.thinkandcode.pl/samples/todo-app-sample:latest
+    volumes:
+      - ./config/application.yml:/application.yml
+    ports:
+      - "8080:8080"
+
+  # monitoring
+  grafana:
+    image: grafana/grafana:8.3.7
+    volumes:
+      - type: bind
+        source: ./grafana/data/grafana.db
+        target: /var/lib/grafana/grafana.db
+    ports:
+      - "3000:3000"
+
+  prometheus:
+    image: prom/prometheus:v2.33.5
+    volumes:
+      - ./prometheus/config:/etc/prometheus
