@@ -1,2 +1,11 @@
 todo-lists:
   limit: 5
+
+security:
+  jwe-token:
+    secret: 8gtpDtBl6cwsDBDLoWu/0A==
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost/todoList

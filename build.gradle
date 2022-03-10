@@ -21,6 +21,7 @@ repositories {
 ext {
 	archUnitVersion = "0.23.1"
 	testcontainersVersion = "1.16.3"
+	nimbusVersion = "9.21"
 }
 
 dependencies {
@@ -28,6 +29,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("com.nimbusds:nimbus-jose-jwt:${nimbusVersion}")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
