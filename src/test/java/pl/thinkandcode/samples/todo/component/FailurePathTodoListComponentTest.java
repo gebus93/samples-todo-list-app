@@ -9,20 +9,12 @@ import pl.thinkandcode.samples.todo.adapters.inbound.rest.*;
 import pl.thinkandcode.samples.todo.adapters.inbound.rest.RestResponseEntityExceptionHandler.ErrorResponse;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static pl.thinkandcode.samples.todo.adapters.inbound.rest.TaskDto.TaskStatus.PENDING;
 
 public class FailurePathTodoListComponentTest extends AbstractComponentTest {
-    public static Stream<String> invalidListNames() {
-        return Stream.of("1", "1".repeat(51));
-    }
-
-    public static Stream<String> invalidTaskNames() {
-        return Stream.of("1", "1".repeat(51));
-    }
 
     @Test
     void givenUserWithMaxNumberOfTodoList_whenCreatingTodoList_shouldFail() {
