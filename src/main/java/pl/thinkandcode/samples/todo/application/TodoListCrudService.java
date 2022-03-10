@@ -1,5 +1,6 @@
 package pl.thinkandcode.samples.todo.application;
 
+import org.springframework.stereotype.Service;
 import pl.thinkandcode.samples.todo.application.UpdateTodoListCommand.Task;
 import pl.thinkandcode.samples.todo.application.exceptions.TodoListDoesNotExistException;
 import pl.thinkandcode.samples.todo.domain.TodoList;
@@ -7,6 +8,7 @@ import pl.thinkandcode.samples.todo.domain.TodoList;
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class TodoListCrudService {
     private final TodoListOpsObserver observer;
     private final TodoListLimitVerificationStrategy limitVerificationStrategy;
