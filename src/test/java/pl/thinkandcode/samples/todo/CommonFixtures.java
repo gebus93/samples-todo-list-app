@@ -4,10 +4,7 @@ import pl.thinkandcode.samples.todo.application.CreateTodoListCommand;
 import pl.thinkandcode.samples.todo.application.DeleteTodoListCommand;
 import pl.thinkandcode.samples.todo.application.GetTodoListQuery;
 import pl.thinkandcode.samples.todo.application.UpdateTodoListCommand;
-import pl.thinkandcode.samples.todo.domain.ListName;
-import pl.thinkandcode.samples.todo.domain.TaskName;
-import pl.thinkandcode.samples.todo.domain.TaskStatus;
-import pl.thinkandcode.samples.todo.domain.TodoList;
+import pl.thinkandcode.samples.todo.domain.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -57,5 +54,9 @@ public class CommonFixtures {
 
     public static GetTodoListQuery getTodoListQueryFixture() {
         return new GetTodoListQuery(listIdFixture());
+    }
+
+    public static UsageSummary usageSummaryFixture() {
+        return UsageSummary.create(1, 5);
     }
 }
