@@ -14,9 +14,11 @@ import pl.thinkandcode.samples.todo.annotations.IntegrationTest;
 import pl.thinkandcode.samples.todo.application.TodoListRepository;
 import pl.thinkandcode.samples.todo.testcontainers.MongoDbContainerHolder;
 
-@SpringBootTest
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 @IntegrationTest
-public class AbstractIntegrationTest {
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+public abstract class AbstractIntegrationTest {
     @Autowired
     protected MongoTemplate mongoTemplate;
     @SpyBean
