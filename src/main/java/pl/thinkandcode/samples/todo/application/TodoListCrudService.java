@@ -3,6 +3,7 @@ package pl.thinkandcode.samples.todo.application;
 import org.springframework.stereotype.Service;
 import pl.thinkandcode.samples.todo.application.UpdateTodoListCommand.Task;
 import pl.thinkandcode.samples.todo.application.exceptions.TodoListDoesNotExistException;
+import pl.thinkandcode.samples.todo.application.exceptions.TodoListsLimitExceededException;
 import pl.thinkandcode.samples.todo.domain.TodoList;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class TodoListCrudService {
         Objects.requireNonNull(cmd, "Command must not be null");
         if (limitVerificationStrategy.isExceeded()) {
             observer.notifyTodoListCreationFailedDueToTheExceededLimit(cmd);
-            return null;
+            throw new TodoListsLimitExceededException();
         }
         var todoListId = idGenerator.generateId();
         var todoList = TodoList.create(todoListId, cmd.name());
