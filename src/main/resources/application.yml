@@ -11,3 +11,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost/todoList
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
