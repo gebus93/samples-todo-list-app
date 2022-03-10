@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  mongo:
+    image: mongo:4.4.9
+    ports:
+      - "12017:27017"
+
+  todo-list:
+    image: fake-registry.thinkandcode.pl/samples/todo-app-sample:latest
+    volumes:
+      - ./config/application.yml:/application.yml
+    ports:
+      - "18080:8080"
