@@ -15,8 +15,8 @@ services:
     image: grafana/grafana:8.3.7
     volumes:
       - type: bind
-        source: ./grafana/data
-        target: /var/lib/grafana
+        source: ./grafana/data/grafana.db
+        target: /var/lib/grafana/grafana.db
     ports:
       - "3000:3000"
 
