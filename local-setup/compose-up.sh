@@ -17,3 +17,6 @@ chmod 777 "${scriptDir}/grafana/data/grafana.db"
 
 docker-compose down
 docker-compose up -d --force-recreate
+
+# sleep 10s
+sleep 10

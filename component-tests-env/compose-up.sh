@@ -13,3 +13,6 @@ docker build -f "${projectDir}/docker/Dockerfile" -t "${image}" "${projectDir}/b
 cd "${scriptDir}"
 docker-compose down
 docker-compose up -d --force-recreate
+
+# sleep 10s
+sleep 10
