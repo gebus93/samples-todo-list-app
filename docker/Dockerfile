@@ -3,7 +3,7 @@ FROM eclipse-temurin:17-jre-alpine
 ENV TZ=Europe/Warsaw
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apk add --no-cache tini
+RUN apk add --no-cache tini curl
 ENTRYPOINT ["/sbin/tini", "--"]
 
 WORKDIR /
