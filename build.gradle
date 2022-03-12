@@ -144,7 +144,7 @@ task componentTestSetUp(type: Exec) {
     if (os.isWindows()) {
         commandLine 'cmd', '/c', 'compose-up.bat'
     } else {
-        commandLine './compose-up.sh'
+        commandLine '/bin/bash', 'compose-up.sh'
     }
     mustRunAfter test, architectureTest, contractTest, integrationTest
 }
@@ -154,6 +154,6 @@ task componentTestTearDown(type: Exec) {
     if (os.isWindows()) {
         commandLine 'cmd', '/c', 'compose-down.bat'
     } else {
-        commandLine './compose-down.sh'
+        commandLine '/bin/bash', 'compose-down.sh'
     }
 }
