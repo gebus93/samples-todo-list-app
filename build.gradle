@@ -1,3 +1,6 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import org.springframework.cloud.contract.verifier.config.TestFramework
+
 buildscript {
     repositories {
         mavenCentral()
@@ -105,15 +108,15 @@ def integrationTest = tasks.register("integrationTest", Test) {
 }
 
 def componentTest = tasks.register("componentTest", Test) {
-    dependsOn dockerComposeUp
-    finalizedBy dockerComposeDown
+    dependsOn componentTestSetUp
+    finalizedBy componentTestTearDown
     useJUnitPlatform {
         includeTags "component"
     }
     testLogging {
         events "passed", "skipped", "failed"
     }
-    shouldRunAfter integrationTest, dockerComposeUp
+    shouldRunAfter integrationTest, componentTestSetUp
 }
 
 tasks.named("check") {
@@ -130,22 +133,23 @@ dependencyManagement {
 }
 
 contracts {
-    testFramework = org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
+    testFramework = TestFramework.JUNIT5
     baseClassForTests = "pl.thinkandcode.samples.todo.contracts.AbstractContractTest"
 }
 
-OperatingSystem os = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
+OperatingSystem os = DefaultNativePlatform.currentOperatingSystem
 
-task dockerComposeUp(type: Exec) {
+task componentTestSetUp(type: Exec) {
     workingDir "${rootDir}/component-tests-env"
     if (os.isWindows()) {
         commandLine 'cmd', '/c', 'compose-up.bat'
     } else {
         commandLine './compose-up.sh'
     }
+    mustRunAfter test, architectureTest, contractTest, integrationTest
 }
 
-task dockerComposeDown(type: Exec) {
+task componentTestTearDown(type: Exec) {
     workingDir "${rootDir}/component-tests-env"
     if (os.isWindows()) {
         commandLine 'cmd', '/c', 'compose-down.bat'

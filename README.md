@@ -95,9 +95,9 @@ Before running component tests from IDE, make sure that docker-compose with test
 To run it manually, execute following command:
 * On linux or mac
 ```shell
-$ ./gradlew dockerComposeUp
+$ ./gradlew componentTestSetUp
 ```
 * On windows
 ```batch
-> .\gradlew.bat dockerComposeUp
+> .\gradlew.bat componentTestSetUp
 ```
