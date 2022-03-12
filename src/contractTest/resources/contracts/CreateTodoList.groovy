@@ -16,7 +16,7 @@ Contract.make {
         }
     }
     response {
-        status OK()
+        status CREATED()
         body([
           "id"   : "b2865319-d026-4ab1-b94a-7a67db79c66a",
           "name" : "TODO list",

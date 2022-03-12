@@ -29,7 +29,7 @@ public class HappyPathTodoListComponentTest extends AbstractComponentTest {
         // Creating new list
         var createTodoListRequest = new CreateTodoListRequest("List-1");
         var createTodoListResponseEntity = restTemplate.postForEntity("/todo-lists", createTodoListRequest, CreateTodoListResponse.class);
-        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         var createdTodoList = createTodoListResponseEntity.getBody();
         assertThat(createdTodoList).satisfies(list -> {
             assertThat(list.id()).isNotNull();
@@ -75,7 +75,7 @@ public class HappyPathTodoListComponentTest extends AbstractComponentTest {
             var listName = "List-" + i;
             createTodoListRequest = new CreateTodoListRequest(listName);
             createTodoListResponseEntity = restTemplate.postForEntity("/todo-lists", createTodoListRequest, CreateTodoListResponse.class);
-            assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
             createdTodoList = createTodoListResponseEntity.getBody();
             assertThat(createdTodoList).satisfies(list -> {
                 assertThat(list.id()).isNotNull();
