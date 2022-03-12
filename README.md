@@ -29,6 +29,11 @@ Sample project showing my coding skills.
 
 ## Running and testing
 
+### Requirements
+* JDK 17 (tested on Temurin-17.0.2+8)
+* Docker and docker-compose with permissions to execute without sudo
+* At least 2GB disk space (required by testcontainers)
+
 ### Running locally
 To simplify running application locally, I decided to create docker-compose file with a few shell scripts. To start the application just execute following command:
 
