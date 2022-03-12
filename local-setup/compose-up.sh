@@ -8,7 +8,7 @@ image=fake-registry.thinkandcode.pl/samples/todo-app-sample:latest
 cd "${projectDir}"
 java --version
 ./gradlew -s build -x check
-docker build -f "${projectDir}/docker/Dockerfile" -t "${image}" "${projectDir}/build/libs"
+DOCKER_BUILDKIT=0 docker build -f "${projectDir}/docker/Dockerfile" -t "${image}" "${projectDir}/build/libs"
 
 cd "${scriptDir}"
 
@@ -17,6 +17,3 @@ chmod 777 "${scriptDir}/grafana/data/grafana.db"
 
 docker-compose down
 docker-compose up -d --force-recreate
-
-# sleep 10s
-sleep 10

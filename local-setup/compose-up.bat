@@ -15,7 +15,3 @@ docker build -f "%projectDir%\docker\Dockerfile" -t "%image%" "%projectDir%\buil
 cd "%scriptDir%"
 docker-compose down
 docker-compose up -d --force-recreate
-
-REM sleep 10s
-waitfor SomethingThatIsNeverHappening /t 10 2>NUL
-exit 0
