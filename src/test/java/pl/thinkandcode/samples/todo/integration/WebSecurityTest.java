@@ -7,11 +7,14 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.thinkandcode.samples.todo.adapters.inbound.rest.security.AuthenticatedUser;
 import pl.thinkandcode.samples.todo.adapters.inbound.rest.security.JweTokenManager;
 import pl.thinkandcode.samples.todo.annotations.IntegrationTest;
+import pl.thinkandcode.samples.todo.testcontainers.MongoDbContainerHolder;
 
 import java.net.URI;
 import java.time.Instant;
@@ -29,6 +32,11 @@ public class WebSecurityTest {
     protected TestRestTemplate restTemplate;
     @Autowired
     protected JweTokenManager tokenManager;
+
+    @DynamicPropertySource
+    static void datasourceConfig(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.mongodb.uri", () -> MongoDbContainerHolder.getInstance().getReplicaSetUrl());
+    }
 
     @Test
     void givenUnauthenticatedRequest_whenCallingSecuredEndpoint_shouldReturn401() {
