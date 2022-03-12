@@ -25,7 +25,7 @@ public class FailurePathTodoListComponentTest extends AbstractComponentTest {
             var createTodoListRequest = new CreateTodoListRequest(listName);
             var createTodoListResponseEntity = restTemplate.postForEntity("/todo-lists", createTodoListRequest,
                                                                           CreateTodoListResponse.class);
-            assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         }
 
         // when
@@ -54,7 +54,7 @@ public class FailurePathTodoListComponentTest extends AbstractComponentTest {
         var createTodoListRequest = new CreateTodoListRequest(listName);
         var createTodoListResponseEntity = restTemplateForUser1.postForEntity("/todo-lists", createTodoListRequest,
                                                                               CreateTodoListResponse.class);
-        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         var todoListId = createTodoListResponseEntity.getBody().id();
 
         // when
@@ -90,7 +90,7 @@ public class FailurePathTodoListComponentTest extends AbstractComponentTest {
         var createTodoListRequest = new CreateTodoListRequest(listName);
         var createTodoListResponseEntity = restTemplateForUser1.postForEntity("/todo-lists", createTodoListRequest,
                                                                               CreateTodoListResponse.class);
-        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         var todoListId = createTodoListResponseEntity.getBody().id();
 
         // when
@@ -123,7 +123,7 @@ public class FailurePathTodoListComponentTest extends AbstractComponentTest {
         var createTodoListRequest = new CreateTodoListRequest(listName);
         var createTodoListResponseEntity = restTemplateForUser1.postForEntity("/todo-lists", createTodoListRequest,
                                                                               CreateTodoListResponse.class);
-        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         var todoListId = createTodoListResponseEntity.getBody().id();
 
         // when
@@ -177,7 +177,7 @@ public class FailurePathTodoListComponentTest extends AbstractComponentTest {
         var listName = "List-1";
         var createTodoListRequest = new CreateTodoListRequest(listName);
         var createTodoListResponseEntity = restTemplate.postForEntity("/todo-lists", createTodoListRequest, CreateTodoListResponse.class);
-        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(createTodoListResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         var todoListId = createTodoListResponseEntity.getBody().id();
 
         // when

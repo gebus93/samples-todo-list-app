@@ -17,6 +17,7 @@ public class TodoListController {
     private final TodoListCrudService service;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     CreateTodoListResponse createTodoList(@RequestBody CreateTodoListRequest request) {
         var todoList = service.createTodoList(new CreateTodoListCommand(request.name()));
         return CreateTodoListResponse.from(todoList);
