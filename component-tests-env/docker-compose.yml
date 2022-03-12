@@ -1,9 +1,15 @@
-version: "3.3"
+version: "3.8"
 services:
   mongo:
     image: mongo:4.4.9
     ports:
       - "12017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
 
   todo-list:
     image: fake-registry.thinkandcode.pl/samples/todo-app-sample:latest
@@ -11,3 +17,19 @@ services:
       - ./config/application.yml:/application.yml
     ports:
       - "18080:8080"
+    healthcheck:
+      test: curl --fail http://localhost:8080/actuator/health || exit 1
+      interval: 5s
+      retries: 10
+      start_period: 5s
+      timeout: 2s
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  # ensures that todo-list service is healthy
+  healthcheck-service:
+    image: alpine
+    depends_on:
+      todo-list:
+        condition: service_healthy

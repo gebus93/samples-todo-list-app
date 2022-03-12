@@ -36,6 +36,11 @@ To simplify running application locally, I decided to create docker-compose file
 $ ./local-setup/compose-up.sh
 ```
 
+If you're using windows system, use the command below:
+```batch
+> .\local-setup\compose-up.bat
+```
+
 Docker-compose will start 4 containers, but only two of them will be bind to the host ports.
 
 | Application   | URL                   | Credentials                            |
@@ -69,17 +74,30 @@ by authentication server.
 | 9bf5eb14-7aee-44c6-9a4e-3310d1da8a54  | jnowak     | 2100-01-01T00:00:00Z  | eyJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiZGlyIn0..bEpRINka6tf8jVox.1eQhF02Fs5adSPad4soKuX1vL0n2z1J1_1DtpCZXaUKk86CGScV-uiSi-kSd3qFIKlgpA8JKpQCgydygus0htxOrrb1md-KwUEbhxl5m-01MHAavbVADCyt75zhiN0Tj7SHc2hX4KQ.MEFFjGmgEhInQ76bQfI0pw      |
 | b3d53502-858c-46d1-ae02-6a502949400a  | jbravo     | 2100-01-01T00:00:00Z  | eyJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiZGlyIn0..U3di2TqTFf3PBTO9.2rdNMW-qjbG8fnsMKdpjFxOYOjp7166FT3NWMWfvDhMuyuRScNH1U53WWN1xkBj_GcXTZMEKJYe2keWRg1NjFU8Ydqkr8lfXAyeDE_-mD2GA-vQEJrC7l1tYmW-pRZy5Fz5hxY00xA.VRkMueg6pOhsZR0Ij0elnQ      |
 
-### Running test from Gradle
+### Running tests from Gradle
 Everything should work out-of-the-box. Just run standard gradle command:
 
 ```shell
 $ ./gradlew check
 ```
+Or if you're using windows system:
+```batch
+> .\gradlew.bat
+```
 
 ### Running component tests from IDE
-To ensure that component tests are testing real application instead of custom local stack mixed with stubs and mocks, I decided to use docker-compose to run real docker image with real mongodb. This can make some trouble for example when running in IDE. I tried to make compose-up.sh script executing automatically from IDE in many ways, but my IDE (Intellij Idea 2021.3.2) prevent me from doing that. This scripts needs jdk 17 to build fresh JAR and docker-image, but Intellij uses its own jdk ([version 11](https://www.jetbrains.com/help/idea/switching-boot-jdk.html)) while executing shell commands. I didn't find any way to change it to jdk17.
+To ensure that component tests are testing real application instead of custom local stack mixed with stubs and mocks, I decided to use docker-compose to run real docker image with real mongodb.
+This can make some troubles for example when running in IDE. I tried to make compose-up.sh script executing automatically from IDE on my linux system in many ways, but my IDE (Intellij Idea 2021.3.2) prevent me from doing that.
+This scripts needs jdk 17 to build fresh JAR and docker-image, but Intellij uses its own jdk ([version 11](https://www.jetbrains.com/help/idea/switching-boot-jdk.html)) while executing shell commands. I didn't find any way to change it to jdk17.
+To my surprise on my windows system everything was working fine, but I decided not to create shared componentTest task for intellij with "before launch" step that is failing on all the other systems.
 
 Before running component tests from IDE, make sure that docker-compose with tests environment is running.
-There are 2 ways to run this docker-compose manually:
-1. By using gradle task `./gradlew dockerComposeUp`
-1. By executing shell script `./component-tests-env/compose-up.sh`
+To run it manually, execute following command:
+* On linux or mac
+```shell
+$ ./gradlew componentTestSetUp
+```
+* On windows
+```batch
+> .\gradlew.bat componentTestSetUp
+```
