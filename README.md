@@ -50,7 +50,7 @@ Docker-compose will start 4 containers, but only two of them will be bind to the
 
 | Application   | URL                   | Credentials                            |
 |---------------|-----------------------|----------------------------------------|
-| Todo list app | http://localhost:8080 | See section "Authorization"            |![img.png](img.png)
+| Todo list app | http://localhost:8080 | See section "Authorization"            |
 | grafana       | http://localhost:3000 | Username: admin<br>Password: adminPass |
 
 ### Monitoring
